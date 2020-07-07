@@ -1,0 +1,145 @@
+body{
+	background-image: -webkit-linear-gradient(1deg, #171615 44%, #5c5665 125%);
+	background-image: -moz-linear-gradient(1deg, #171615 44%, #5c5665 125%);
+    background-image: -ms-linear-gradient(1deg, #171615 44%, #5c5665 125%);
+	/*background-color: gray;*/
+}
+
+.nav-header{
+	padding: 3rem 0;
+}
+
+.navbar-brand{
+	color: #fff;
+}
+
+.navbar-brand:hover{
+	color: #BEBEBE;
+}
+
+@media (max-width: 996px){
+
+	.navbar-brand h1{
+  		font-size: 1.5rem;
+	}
+	.add-btn{
+		font-size: 1rem;
+	}
+
+}
+
+@media (max-width: 776px){
+
+	.navbar-brand h1{
+  		font-size: 18px;
+	}
+	.add-btn{
+		font-size: 12px;
+	}
+
+}
+
+@media (max-width: 567px){
+
+	.nav-header{
+		display: block !important;
+		text-align: center;
+	}
+	
+}
+
+
+/*popup menu*/
+.user_card {
+	height: 400px;
+	width: 350px;
+	margin-top: auto;
+	margin-bottom: auto;
+	background: #f39c12;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding: 10px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 5px;
+
+}
+
+.brand_logo_container {
+	position: absolute;
+	height: 170px;
+	width: 170px;
+	top: -75px;
+	border-radius: 50%;
+	background: #60a3bc;
+	padding: 10px;
+	text-align: center;
+}
+
+.logo-book{
+	position: relative;
+    top: 30px;
+}
+
+.brand_logo {
+	height: 150px;
+	width: 150px;
+	border-radius: 50%;
+	border: 2px solid white;
+}
+.form_container {
+	margin-top: 100px;
+}
+.login_btn {
+	width: 100%;
+	background: #c0392b !important;
+	color: white !important;
+}
+.login_btn:focus {
+	box-shadow: none !important;
+	outline: 0px !important;
+}
+.login_container {
+	padding: 0 2rem;
+}
+.input-group-text {
+	background: #c0392b !important;
+	color: white !important;
+	border: 0 !important;
+	border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.input_user,
+.input_pass:focus {
+	box-shadow: none !important;
+	outline: 0px !important;
+}
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+	background-color: #c0392b !important;
+}
+
+.card-title{
+	margin: 0;
+}
+
+.book{
+	padding: 10px;
+}
+
+.book-info{
+	border-radius: 5px;
+	/*margin: 10px;*/
+	background-color: #fff;
+}
+
+.pages-text{
+	margin-bottom: .55rem;
+}
+
+
+.pages-text{
+	padding-left: 10px;
+	padding-top: 2px;
+}
