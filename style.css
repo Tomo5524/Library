@@ -1,3 +1,4 @@
+
 body{
 	background-image: -webkit-linear-gradient(1deg, #171615 44%, #5c5665 125%);
 	background-image: -moz-linear-gradient(1deg, #171615 44%, #5c5665 125%);
@@ -45,6 +46,14 @@ body{
 		display: block !important;
 		text-align: center;
 	}
+
+	.navbar-brand{
+		padding-bottom: 2rem;
+	}
+
+	.book{
+		margin: 10px;
+	}
 	
 }
 
@@ -64,7 +73,7 @@ body{
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	border-radius: 5px;
+	border-radius: 10px;
 
 }
 
@@ -129,7 +138,7 @@ body{
 }
 
 .book-info{
-	border-radius: 5px;
+	border-radius: 10px;
 	/*margin: 10px;*/
 	background-color: #fff;
 }
@@ -138,8 +147,30 @@ body{
 	margin-bottom: .55rem;
 }
 
-
 .pages-text{
 	padding-left: 10px;
 	padding-top: 2px;
+}
+
+.remove-icon{
+	padding-left: 10px;
+}
+
+.remove-btn{
+	background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+.text-muted{
+	padding-top: 3px;
+}
+
+.blur{
+	/* Add the blur effect */
+	filter: blur(8px);
+	-webkit-filter: blur(8px);
 }
