@@ -6,7 +6,7 @@
 
 // todo
 // 
-// 0, new book cannot be deleted
+// 0, add remove icon on the top right of pop up menu
 // 1, when input is missing, have a warning message popup by the text box
 // 2, when input is not number, have a warning message popup by the text box
 // 3, make background blur when popup menu is activated
@@ -37,7 +37,6 @@ const p_num = document.querySelectorAll('#p-num');
 const remove_btn = document.querySelectorAll('.remove-btn');
 
 
-
 // create object
 class Book {
   // the constructor...
@@ -49,9 +48,6 @@ class Book {
   	this.read = read;
   }
 
-  // print_book(){
-  // 	console.log('cat walking down the stree found' + this.title,this.author, + 'with' + this.pages + 'pages', this.read,this.ratings,this.review)
-  // }
   
 }
 
@@ -76,7 +72,7 @@ function addExisitingBookToLibrary(){
 };
 
 // console.log(b_title.length)
-// addExisitingBookToLibrary()
+addExisitingBookToLibrary()
 // console.log(myLibrary)
 
 function addBookToLibrary(b_name,a_name,numOfPages) {
@@ -86,53 +82,41 @@ function addBookToLibrary(b_name,a_name,numOfPages) {
 };	
 
 //remove book
-console.log(remove_btn.length)
+// console.log(remove_btn.length)
 
-function setRemoveBtn(){
-	// when looping through objects, use in 
-	for (let i = 0; i < remove_btn.length; i++){
-		remove_btn[i].addEventListener('click',(e) => {
-    		books[i].remove()
-		});
-	};
-};
+// function setRemoveBtn(){
 
-setRemoveBtn()
+// 	// when looping through objects, use in 
+// 	for (let i = 0; i < remove_btn.length; i++){
+// 		remove_btn[i].addEventListener('click',(e) => {
+//     		books[i].remove()
+//     		// console.log(e)
+//     		// remove_btn.pop()
+// 		});
+// 	};
+// 	// console.log('AFTER setbtn')
+// 	// console.log(remove_btn)
+// };
 
-
-
-
+// setRemoveBtn()
 
 // user action
 
 // activate pop-up menu
 add_btn.addEventListener('click',(e) => {
-    // console.log('check hiya')
+    
 
     // make background blur when popup menu is activated
     b_form.classList.remove("d-none"); // remove d-none so book form pops up
   
     // body.classList.add('blur')
 
-
 });
 
-// deactivate pop-up menu
-login_btn.addEventListener('click',(e) => {
 
-	e.preventDefault();
-	console.log('check hiya');
-	console.log('bookname is: ' + bookname.value)
-	console.log('authorname is: ' + authorname.value)
-	console.log('pages is: ' + pages.value)
+function createNewDiv(b,a,p){
 
-
-	addBookToLibrary(bookname.value,authorname.value,pages.value)
-
-	// create new book
-	// work flow - create div, append it to parent, modify contens 
-
-	// create a row
+	// create row
 	new_book = document.createElement('div');
 	new_book.setAttribute('class', 'book col-sm-12 col-md-6 col-lg-4 col-xl-3');
 	console.log(cards);
@@ -163,7 +147,7 @@ login_btn.addEventListener('click',(e) => {
 	// get user's input for books'name
 	user_input_bookname = document.createElement('p');
 	user_input_bookname.setAttribute('class', 'user-input pb-2 pt-2');
-	user_input_bookname.innerHTML = bookname.value //https://stackoverflow.com/questions/27079598/error-failed-to-execute-appendchild-on-node-parameter-1-is-not-of-type-no
+	user_input_bookname.innerHTML = temp_book //https://stackoverflow.com/questions/27079598/error-failed-to-execute-appendchild-on-node-parameter-1-is-not-of-type-no
 	book_card.appendChild(user_input_bookname);
 
 
@@ -181,7 +165,7 @@ login_btn.addEventListener('click',(e) => {
 	// get user's input for books'name
 	user_input_authorname = document.createElement('p');
 	user_input_authorname.setAttribute('class', 'user-input pb-2 pt-2');
-	user_input_authorname.innerHTML = authorname.value
+	user_input_authorname.innerHTML = temp_authour
 	book_card.appendChild(user_input_authorname);
 
 
@@ -199,7 +183,7 @@ login_btn.addEventListener('click',(e) => {
 	// get user's input for pages
 	user_input_page = document.createElement('p');
 	user_input_page.setAttribute('class', 'pages-text');
-	user_input_page.innerHTML = pages.value;
+	user_input_page.innerHTML = temp_pages;
 	book_card.appendChild(user_input_page);
 
 
@@ -210,15 +194,20 @@ login_btn.addEventListener('click',(e) => {
 	card_body.appendChild(book_card);
 	read_button = document.createElement('button');
 	read_button.type = 'button'
+	read_button.setAttribute('id', 'toggle');
 
+	// assign button according to user's input
 	if (read.checked) {
   		read_button.setAttribute('class', 'btn btn-primary');
-  		read_button.innerHTML = 'Read'
+  		read_button.innerHTML = 'Finished'
 
 	} else if (not_read.checked){
 		read_button.setAttribute('class', 'btn btn-warning');
-		read_button.innerHTML = 'Not Read'
-	} 
+		read_button.innerHTML = 'Not Finished'
+	}
+
+
+
 	// else{
 
 	// }
@@ -239,26 +228,104 @@ login_btn.addEventListener('click',(e) => {
 	// create button
 	remove_button = document.createElement('button');
 	remove_button.setAttribute('class', 'remove-btn remove-icon');
-
+	
 	// create icon
 	remove_icon = document.createElement('i');
-	remove_icon.setAttribute('class', 'fa fa-times');
+	remove_icon.setAttribute('class', 'fa fa-trash align-top');
 
 	remove_button.appendChild(remove_icon);
 	book_card.appendChild(remove_button);
+}
+
+// deactivate pop-up menu
+login_btn.addEventListener('click',(e) => {
+
+	e.preventDefault();
+	// console.log('check hiya');
+	// console.log('bookname is: ' + bookname.value)
+	// console.log('authorname is: ' + authorname.value)
+	// console.log('pages is: ' + pages.value)
+
+	// create new book
+	// work flow - create div, append it to parent, modify contens 
+
+	temp_book = bookname.value
+	temp_authour = authorname.value
+	temp_pages = pages.value
 
 
-    // make background blur when popup menu is activated
+	addBookToLibrary(bookname.value,authorname.value,pages.value)
+
+	createNewDiv(bookname.value,authorname.value,pages.value)
+
+	// clear fields
+    bookname.value = ''
+    authorname.value = ''
+    pages.value = ''
+
+	// make background blur when popup menu is activated
     b_form.classList.add("d-none"); // remove d-none so book form pops up
     // body.classList.add('blur')      
     // console.log(e)
 
-    // clear fields
-    bookname.value = ''
-    authorname.value = ''
-    pages.value = ''
     
+
+	
+
+	// create a row
+	
+
+	// console.log('b4 setbtn')
+	
+
+	// problem is that it always delets the newest book no matter what
+	// e.g. 3 books added and trying to delete first book deletes the newest book
+
+	// how to activate new book's remove btn
+	// console.log(remove_button)
+	// remove_button.addEventListener('click', function(e){
+	// 	// e.parentNode; doesnt work cuz e is event lister not node
+	// 	remove_button.parentNode.parentNode.parentNode.remove()
+	// });
+	
 });
+
+function main(){
+
+	// apply event listeners to all elements to handle toggle read and delete
+	// Time complexity could be improved if each element is given id and access it
+	document.addEventListener('click', e => {
+		// delete book
+		if (e.target.className === 'fa fa-trash align-top'){
+			// e.target gets html element
+			e.target.parentNode.parentNode.parentNode.parentNode.remove()	
+		}
+
+		// toggle read button
+		if (e.target.id === 'toggle'){
+			
+			if (e.target.innerHTML === 'Finished'){
+				// change clas name to change button theme
+				e.target.className = 'btn btn-warning'
+				e.target.innerHTML = 'Not Finished'
+			}else{
+				e.target.className = 'btn btn-primary'
+  				e.target.innerHTML = 'Finished'
+			}
+				
+		}
+
+		console.log(e);
+
+
+	});
+}
+
+
+main()
+
+// setRemoveBtn()
+
 
 
 // get user input
