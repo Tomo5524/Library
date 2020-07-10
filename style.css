@@ -6,6 +6,11 @@ body{
 	/*background-color: gray;*/
 }
 
+/*get rid of border when buttons are clikced*/
+button:active{
+	outline: none;
+}
+
 .nav-header{
 	padding: 3rem 0;
 }
@@ -88,6 +93,17 @@ body{
 	text-align: center;
 }
 
+.logo-wrapper{
+	position: relative;
+    left: 5px;
+    top: 2px;
+    height: 140px;
+    width: 140px;
+    border-radius: 50%;
+    background: #c0392b;
+    text-align: center;
+}
+
 .logo-book{
 	position: relative;
     top: 30px;
@@ -127,6 +143,10 @@ body{
 }
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
 	background-color: #c0392b !important;
+}
+
+.fa-times{
+	font-size: 20px;
 }
 
 .card-title{

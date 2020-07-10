@@ -6,7 +6,6 @@
 
 // todo
 // 
-// 0, add remove icon on the top right of pop up menu
 // 1, when input is missing, have a warning message popup by the text box
 // 2, when input is not number, have a warning message popup by the text box
 // 3, make background blur when popup menu is activated
@@ -34,7 +33,8 @@ const not_read = document.querySelector('#not-read');
 const b_title = document.querySelectorAll('#b-title'); 
 const author_title = document.querySelectorAll('#au-title');
 const p_num = document.querySelectorAll('#p-num');
-const remove_btn = document.querySelectorAll('.remove-btn');
+const remove_btn = document.querySelectorAll('.remove-icon');
+const close_btn = document.querySelector('.close-icon');
 
 
 // create object
@@ -111,6 +111,16 @@ add_btn.addEventListener('click',(e) => {
   
     // body.classList.add('blur')
 
+});
+
+// close pop-up menu
+close_btn.addEventListener('click',(e) => {
+
+    // make background blur when popup menu is activated
+    b_form.classList.add("d-none"); // remove d-none so book form pops up
+  	
+    // body.classList.add('blur')
+    console.log(e);
 });
 
 
@@ -241,10 +251,25 @@ function createNewDiv(b,a,p){
 login_btn.addEventListener('click',(e) => {
 
 	e.preventDefault();
-	// console.log('check hiya');
-	// console.log('bookname is: ' + bookname.value)
-	// console.log('authorname is: ' + authorname.value)
-	// console.log('pages is: ' + pages.value)
+	
+	// // check if input is valid or not
+	// if (bookname.value === ''){
+	// 	// test a case where type name and delete it and submit 
+	// 	// if it goes through, wrong
+
+	// }
+
+	// else if (authorname.value === ''){
+
+	// }
+
+	// else if (pages.value === ''){
+		
+	// }
+
+	// else{
+	// 	// move the rest here
+	// }
 
 	// create new book
 	// work flow - create div, append it to parent, modify contens 
@@ -315,7 +340,7 @@ function main(){
 				
 		}
 
-		console.log(e);
+		// console.log(e);
 
 
 	});

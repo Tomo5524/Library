@@ -28,13 +28,15 @@
     <div class="container d-none book-form">
       <div class="d-flex justify-content-center">
         <div class="user_card">
-          <!-- create remove toggle  -->
-          <div class="remove-icon-box">
-            <button class="remove-btn remove-icon"><i class="fa fa-times" aria-hidden="true"></i></button>
+          <!-- create remove button  -->
+          <div class="remove-icon-box text-right">
+            <button class="remove-btn close-icon"><i class="fa fa-times align-top" aria-hidden="true"></i></button>
           </div>
           <div class="d-flex justify-content-center">
             <div class="brand_logo_container">
-              <i class="fa fa-book logo-book fa-5x" aria-hidden="true"></i>
+              <div class="d-flex justify-content-center logo-wrapper">
+                <i class="fa fa-book logo-book fa-5x" aria-hidden="true"></i>
+              </div>
             </div>
           </div>
           <div class="d-flex justify-content-center form_container">
@@ -43,24 +45,24 @@
                 <div class="input-group-append">
                   <span class="input-group-text"><i class="fa fa-book" aria-hidden="true"></i></span>
                 </div>
-                <input type="text" name="" class="form-control input_user" id='bookname' value="" placeholder="bookname">
+                <input type="text" name="bookname" class="form-control input_user" id='bookname' placeholder="bookname" required>
               </div>
               <div class="input-group mb-3">
                 <div class="input-group-append">
                   <span class="input-group-text"><i class="fas fa-user"></i></span>
                 </div>
-                <input type="text" name="" class="form-control input_user" value="" id='authorname' placeholder="authorname">
+                <input type="text" name="authorname" class="form-control input_user" id='authorname' placeholder="authorname" required>
               </div>
               <div class="input-group mb-3">
                 <div class="input-group-append">
                   <span class="input-group-text"><i class="fa fa-bookmark" aria-hidden="true"></i></i></span>
                 </div>
-                <input type="number" name="" class="form-control input_pass" id='pages' value="" placeholder="pages">
+                <input type="number" name="pages" class="form-control input_pass" id='pages' placeholder="pages" required>
               </div>
               <div class="read-check mb-3">
-                <input type="radio" id="read" name="read" value="read">
+                <input type="radio" id="read" name="read" value="read" checked>
                 <label for="read">Read</label>
-                <input type="radio" id="not-read" name="read" value="not-read">
+                <input type="radio" id="not-read" name="read" value="not-read" required>
                 <label for="not-read">Not Read yet</label>
               </div>
               <div class="d-flex justify-content-center mt-3 login_container">
