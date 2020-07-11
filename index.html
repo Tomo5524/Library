@@ -17,77 +17,80 @@
   <title>YDL</title>
 </head>
 <body>
-  <div class="container">
+
+  <!-- pop up menu -->
+  <div class="container d-none book-form">
+    <div class="d-flex justify-content-center">
+      <div class="user_card">
+        <!-- create remove button  -->
+        <div class="remove-icon-box text-right">
+          <button class="remove-btn close-icon"><i class="fa fa-times align-top" aria-hidden="true"></i></button>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="brand_logo_container">
+            <div class="d-flex justify-content-center logo-wrapper">
+              <i class="fa fa-book logo-book fa-5x" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center form_container">
+          <form>
+            <div class="input-group mb-3">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-book" aria-hidden="true"></i></span>
+              </div>
+              <input type="text" name="bookname" class="form-control input_user" id='bookname' placeholder="bookname" required>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+              </div>
+              <input type="text" name="authorname" class="form-control input_user" id='authorname' placeholder="authorname" required>
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fa fa-bookmark" aria-hidden="true"></i></i></span>
+              </div>
+              <input type="number" name="pages" class="form-control input_pass" id='pages' placeholder="pages" required>
+            </div>
+            <div class="read-check mb-3">
+              <input type="radio" id="read" name="read" value="read">
+              <label for="read">Read</label>
+              <input type="radio" id="not-read" name="read" value="not-read" checked>
+              <label for="not-read">Not Read yet</label>
+            </div>
+            <div class="d-flex justify-content-center mt-3 login_container">
+              <button type="submit" name="submit" class="btn login_btn">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- main container -->
+  <div class="container bg-blur">
     <!-- header -->
     <div class="nav-header d-flex justify-content-between">
       <a class='navbar-brand' href="#"><h1 class="display-5">Welcome to your daily dose library</h1></a>
       <button type="button" class="btn btn-secondary btn-lg add-btn">Add a new book</button>
     </div>
 
-    <!-- pop up menu -->
-    <div class="container d-none book-form">
-      <div class="d-flex justify-content-center">
-        <div class="user_card">
-          <!-- create remove button  -->
-          <div class="remove-icon-box text-right">
-            <button class="remove-btn close-icon"><i class="fa fa-times align-top" aria-hidden="true"></i></button>
-          </div>
-          <div class="d-flex justify-content-center">
-            <div class="brand_logo_container">
-              <div class="d-flex justify-content-center logo-wrapper">
-                <i class="fa fa-book logo-book fa-5x" aria-hidden="true"></i>
-              </div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-center form_container">
-            <form>
-              <div class="input-group mb-3">
-                <div class="input-group-append">
-                  <span class="input-group-text"><i class="fa fa-book" aria-hidden="true"></i></span>
-                </div>
-                <input type="text" name="bookname" class="form-control input_user" id='bookname' placeholder="bookname" required>
-              </div>
-              <div class="input-group mb-3">
-                <div class="input-group-append">
-                  <span class="input-group-text"><i class="fas fa-user"></i></span>
-                </div>
-                <input type="text" name="authorname" class="form-control input_user" id='authorname' placeholder="authorname" required>
-              </div>
-              <div class="input-group mb-3">
-                <div class="input-group-append">
-                  <span class="input-group-text"><i class="fa fa-bookmark" aria-hidden="true"></i></i></span>
-                </div>
-                <input type="number" name="pages" class="form-control input_pass" id='pages' placeholder="pages" required>
-              </div>
-              <div class="read-check mb-3">
-                <input type="radio" id="read" name="read" value="read" checked>
-                <label for="read">Read</label>
-                <input type="radio" id="not-read" name="read" value="not-read" required>
-                <label for="not-read">Not Read yet</label>
-              </div>
-              <div class="d-flex justify-content-center mt-3 login_container">
-                <button type="submit" name="submit" class="btn login_btn">Submit</button>
-              </div>
-             </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    
 
    <!-- cards -->
    <div class="container cards-container">
     <div class="row cards-row">
-      <div class="book col-sm-12 col-md-6 col-lg-4 col-xl-3">
+      <!-- <div class="book col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <div class="book-info">
           <div class="card-body">
             <div class="book-item book-title">
               <h5 class="card-title">Book title: </h5>
-              <p class="user-input pb-2 pt-2" id='b-title'>Can't hurt me</p>
+              <p class="user-input pb-2 pt-2" id='b-title'>Zero to One</p>
             </div>
             <div class="book-item book-author">
               <h5 class="card-title">Book author: </h5>
-              <p class="user-input pb-2 pt-2" id='au-title'>David goggins</p>
+              <p class="user-input pb-2 pt-2" id='au-title'>Peter Thiel</p>
             </div>
             <div class="book-item book-pages d-flex pb-2">
               <h5 class="card-title">Pages: </h5>
@@ -112,7 +115,32 @@
             </div>
             <div class="book-item book-author">
               <h5 class="card-title">Book author: </h5>
-              <p class="user-input pb-2 pt-2" id='au-title'>David goggins</p>
+              <p class="user-input pb-2 pt-2" id='au-title'>Tina Seelig</p>
+            </div>
+            <div class="book-item book-pages d-flex pb-2">
+              <h5 class="card-title">Pages: </h5>
+              <p class="pages-text" id='p-num'>230</p>
+            </div>
+            <div class="book-item book-read">
+              <button type="button" id='toggle' class="btn btn-warning">Not Finished</button>
+            </div>
+          </div>
+          <div class="card-footer d-flex">
+            <small class="text-muted">Remove</small>
+            <button class="remove-btn remove-icon"><i class="fa fa-trash align-top" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="book col-sm-12 col-md-6 col-lg-4 col-xl-3">
+        <div class="book-info">
+          <div class="card-body">
+            <div class="book-item book-title">
+              <h5 class="card-title">Book title: </h5>
+              <p class="user-input pb-2 pt-2" id='b-title'>Think grow and rich</p>
+            </div>
+            <div class="book-item book-author">
+              <h5 class="card-title">Book author: </h5>
+              <p class="user-input pb-2 pt-2" id='au-title'>Ben</p>
             </div>
             <div class="book-item book-pages d-flex pb-2">
               <h5 class="card-title">Pages: </h5>
@@ -133,54 +161,27 @@
           <div class="card-body">
             <div class="book-item book-title">
               <h5 class="card-title">Book title: </h5>
-              <p class="user-input pb-2 pt-2" id='b-title'>Wake up</p>
+              <p class="user-input pb-2 pt-2" id='b-title'>Harry Potter</p>
             </div>
             <div class="book-item book-author">
               <h5 class="card-title">Book author: </h5>
-              <p class="user-input pb-2 pt-2" id='au-title'>David goggins</p>
+              <p class="user-input pb-2 pt-2" id='au-title'>J. K. Rowling</p>
             </div>
             <div class="book-item book-pages d-flex pb-2">
               <h5 class="card-title">Pages: </h5>
               <p class="pages-text" id='p-num'>230</p>
             </div>
             <div class="book-item book-read">
-              <button type="button" id='toggle' class="btn btn-primary">Finished</button>
+              <button type="button" id='toggle' class="btn btn-warning">Not Finished</button>
             </div>
           </div>
           <div class="card-footer d-flex">
             <small class="text-muted">Remove</small>
             <button class="remove-btn remove-icon"><i class="fa fa-trash align-top" aria-hidden="true"></i></button>
           </div>
-        </div>
-      </div>
-      <div class="book col-sm-12 col-md-6 col-lg-4 col-xl-3">
-        <div class="book-info">
-          <div class="card-body">
-            <div class="book-item book-title">
-              <h5 class="card-title">Book title: </h5>
-              <p class="user-input pb-2 pt-2" id='b-title'>Through the wire</p>
-            </div>
-            <div class="book-item book-author">
-              <h5 class="card-title">Book author: </h5>
-              <p class="user-input pb-2 pt-2" id='au-title'>David goggins</p>
-            </div>
-            <div class="book-item book-pages d-flex pb-2">
-              <h5 class="card-title">Pages: </h5>
-              <p class="pages-text" id='p-num'>230</p>
-            </div>
-            <div class="book-item book-read">
-              <button type="button" id='toggle' class="btn btn-primary">Finished</button>
-            </div>
-          </div>
-          <div class="card-footer d-flex">
-            <small class="text-muted">Remove</small>
-            <button class="remove-btn remove-icon"><i class="fa fa-trash align-top" aria-hidden="true"></i></button>
-          </div>
-        </div>
+        </div> -->
       </div>
     </div>
-    
-
 
   <!-- end of container -->
   </div>

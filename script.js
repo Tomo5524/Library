@@ -19,11 +19,12 @@
 
 // global variables
 let myLibrary = []; // store objects (user input)
+const bg_blur = document.querySelector('.bg-blur')
 const add_btn = document.querySelector('.add-btn');
 const b_form = document.querySelector('.book-form');
-const body = document.getElementsByTagName("BODY")[0];
+// const body = document.getElementsByTagName("BODY")[0];
 const books = document.querySelectorAll('.book');
-const login_btn = document.querySelector('.login_btn');
+const submit = document.querySelector('.login_btn');
 const bookname = document.querySelector('#bookname');
 const authorname = document.querySelector('#authorname');
 const pages = document.querySelector('#pages');
@@ -33,8 +34,10 @@ const not_read = document.querySelector('#not-read');
 const b_title = document.querySelectorAll('#b-title'); 
 const author_title = document.querySelectorAll('#au-title');
 const p_num = document.querySelectorAll('#p-num');
+const read_toggle = document.querySelectorAll('#toggle');
 const remove_btn = document.querySelectorAll('.remove-icon');
 const close_btn = document.querySelector('.close-icon');
+const form = document.querySelector('.user_card');
 
 
 // create object
@@ -42,42 +45,43 @@ class Book {
   // the constructor...
   constructor(title,author,pages,read){
   	// user input instanciate a new object
+  	this.id = myLibrary.length
   	this.title = title;
   	this.author = author;
   	this.pages = pages;
   	this.read = read;
   }
 
-  
 }
-
-// when instanciating a new object, you need new 
-
-// const newobj = new Book('cat','meowkichi','N/A',false,5,null)
-// console.log(newobj)
-// newobj.print_book()
 
 function addExisitingBookToLibrary(){
 	// when looping through objects, use in 
+	
 	for (let i = 0; i < b_title.length; i++){
-		// console.log('hiya')
+		// console.log(read_toggle)
 
 		// alrady exsiting data
 		b_title_input = b_title[i].textContent
 		author_title_input = author_title[i].textContent
 		p_num_input = p_num[i].textContent
-		addBookToLibrary(b_title_input,author_title_input,p_num_input)
+		already_read = (read_toggle[i].textContent === 'Finished') ? true : false;
+
+		addBookToLibrary(b_title_input,author_title_input,p_num_input, already_read)
 
 	}
 };
 
-// console.log(b_title.length)
-addExisitingBookToLibrary()
-// console.log(myLibrary)
 
-function addBookToLibrary(b_name,a_name,numOfPages) {
+// local storage flow
+// myLibrary = [0: Book {title: "asfd", author: "h", pages: "23", read: false}
+// 			1: Book {title: "fh", author: "hf", pages: "23", read: true}
+// 			2: Book {title: "fgh", author: "jf", pages: "23", read: false}
+// 			3: Book {title: "cxv", author: "fgh", pages: "23", read: true}
+// ]
+
+function addBookToLibrary(b_name,a_name,numOfPages,readOrNot) {
   // do stuff here
-  myLibrary.push(new Book(b_name,a_name,numOfPages))
+  myLibrary.push(new Book(b_name,a_name,numOfPages,readOrNot))
 
 };	
 
@@ -102,11 +106,19 @@ function addBookToLibrary(b_name,a_name,numOfPages) {
 
 // user action
 
+
+
+
 // activate pop-up menu
 add_btn.addEventListener('click',(e) => {
     
-
     // make background blur when popup menu is activated
+    // b_form.classList.add("d-none"); // remove d-none so book form pops up
+    // body.classList.add('blur')      
+    // console.log(e)
+
+    bg_blur.classList.add('blur')
+
     b_form.classList.remove("d-none"); // remove d-none so book form pops up
   
     // body.classList.add('blur')
@@ -118,18 +130,18 @@ close_btn.addEventListener('click',(e) => {
 
     // make background blur when popup menu is activated
     b_form.classList.add("d-none"); // remove d-none so book form pops up
-  	
+  	bg_blur.classList.remove('blur')
     // body.classList.add('blur')
-    console.log(e);
+    // console.log(e);
 });
 
 
-function createNewDiv(b,a,p){
+function renderNewDiv(id,b,a,p,r){
 
 	// create row
 	new_book = document.createElement('div');
 	new_book.setAttribute('class', 'book col-sm-12 col-md-6 col-lg-4 col-xl-3');
-	console.log(cards);
+	// console.log(cards);
 	// document.body.insertBefore(new_book, cards)
 	cards.appendChild(new_book);
 
@@ -207,20 +219,15 @@ function createNewDiv(b,a,p){
 	read_button.setAttribute('id', 'toggle');
 
 	// assign button according to user's input
-	if (read.checked) {
+	if (r) {
   		read_button.setAttribute('class', 'btn btn-primary');
   		read_button.innerHTML = 'Finished'
 
-	} else if (not_read.checked){
+	} else {
 		read_button.setAttribute('class', 'btn btn-warning');
 		read_button.innerHTML = 'Not Finished'
 	}
 
-
-
-	// else{
-
-	// }
 
 	book_card.appendChild(read_button);
 
@@ -238,81 +245,59 @@ function createNewDiv(b,a,p){
 	// create button
 	remove_button = document.createElement('button');
 	remove_button.setAttribute('class', 'remove-btn remove-icon');
+	// console.log(id.toString())
+	// const z = id.toString()
+	// console.log(typeof z)
+	
+	
 	
 	// create icon
 	remove_icon = document.createElement('i');
 	remove_icon.setAttribute('class', 'fa fa-trash align-top');
+	remove_icon.setAttribute('id', id.toString());
 
 	remove_button.appendChild(remove_icon);
 	book_card.appendChild(remove_button);
 }
 
-// deactivate pop-up menu
-login_btn.addEventListener('click',(e) => {
+// deactivate pop-up menu, get inputs 
 
-	e.preventDefault();
-	
-	// // check if input is valid or not
-	// if (bookname.value === ''){
-	// 	// test a case where type name and delete it and submit 
-	// 	// if it goes through, wrong
+submit.addEventListener('click',(e) => {
 
-	// }
+	// check if input is entered or not
+	// dont need to check all of fields individually since HTML default required takes care of each field indiviually 
+	// all that needs to be checked is all fields entered or not
+	if (bookname.value !== '' && authorname.value !== '' && pages.value !== '' && (read.checked || not_read.checked)) {
 
-	// else if (authorname.value === ''){
-
-	// }
-
-	// else if (pages.value === ''){
 		
-	// }
+		
+		// console.log('hiya')
+		// test a case where type name and delete it and submit 
+		// if it goes through, wrong
+		temp_book = bookname.value
+		temp_authour = authorname.value
+		temp_pages = pages.value
+		readOrNot = read.checked ? true : false;
 
-	// else{
-	// 	// move the rest here
-	// }
+		addBookToLibrary(bookname.value,authorname.value,pages.value, readOrNot)
+		// new_book = myLibrary[myLibrary.length-1]
+		new_book_id = myLibrary.length-1
+		// console.log(typeof new_book_id)
 
-	// create new book
-	// work flow - create div, append it to parent, modify contens 
+		renderNewDiv(new_book_id,bookname.value,authorname.value,pages.value, readOrNot) 
 
-	temp_book = bookname.value
-	temp_authour = authorname.value
-	temp_pages = pages.value
+		// clear fields
+	    bookname.value = ''
+	    authorname.value = ''
+	    pages.value = ''
+
+	    e.preventDefault();
+	   
+		b_form.classList.add("d-none"); // remove d-none so book form pops up
+		bg_blur.classList.remove('blur')
 
 
-	addBookToLibrary(bookname.value,authorname.value,pages.value)
-
-	createNewDiv(bookname.value,authorname.value,pages.value)
-
-	// clear fields
-    bookname.value = ''
-    authorname.value = ''
-    pages.value = ''
-
-	// make background blur when popup menu is activated
-    b_form.classList.add("d-none"); // remove d-none so book form pops up
-    // body.classList.add('blur')      
-    // console.log(e)
-
-    
-
-	
-
-	// create a row
-	
-
-	// console.log('b4 setbtn')
-	
-
-	// problem is that it always delets the newest book no matter what
-	// e.g. 3 books added and trying to delete first book deletes the newest book
-
-	// how to activate new book's remove btn
-	// console.log(remove_button)
-	// remove_button.addEventListener('click', function(e){
-	// 	// e.parentNode; doesnt work cuz e is event lister not node
-	// 	remove_button.parentNode.parentNode.parentNode.remove()
-	// });
-	
+	}
 });
 
 function main(){
@@ -320,10 +305,25 @@ function main(){
 	// apply event listeners to all elements to handle toggle read and delete
 	// Time complexity could be improved if each element is given id and access it
 	document.addEventListener('click', e => {
+		// console.log(e);
+
 		// delete book
 		if (e.target.className === 'fa fa-trash align-top'){
+			console.log(e.target.id)
 			// e.target gets html element
-			e.target.parentNode.parentNode.parentNode.parentNode.remove()	
+			e.target.parentNode.parentNode.parentNode.parentNode.remove()
+			// delte object from my library
+			del_idx = parseInt(e.target.id)
+			console.log(typeof del_idx)
+			arr = myLibrary.filter(item => item['id'] !== del_idx)
+			console.log(arr)
+			myLibrary = arr;
+			console.log(typeof myLibrary)
+
+			// for (let i = 0; i < myLibrary.length; i++){
+			// 	console.log(myLibrary[i]['id'])
+			// }
+			
 		}
 
 		// toggle read button
@@ -340,35 +340,9 @@ function main(){
 				
 		}
 
-		// console.log(e);
-
-
 	});
 }
 
 
+addExisitingBookToLibrary()
 main()
-
-// setRemoveBtn()
-
-
-
-// get user input
-// bookname.addEventListener('click',(e) => {
-
-//     console.log(e)
-//     console.log(e.target.id)
-//     console.log(e.target.className)
-
-// });
-
-// authorname.addEventListener('click',(e) => {
-//     console.log(e)
-
-// });
-
-// pages.addEventListener('click',(e) => {
-//     console.log(e)
-
-// });
-

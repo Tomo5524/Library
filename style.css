@@ -23,45 +23,6 @@ button:active{
 	color: #BEBEBE;
 }
 
-@media (max-width: 996px){
-
-	.navbar-brand h1{
-  		font-size: 1.5rem;
-	}
-	.add-btn{
-		font-size: 1rem;
-	}
-
-}
-
-@media (max-width: 776px){
-
-	.navbar-brand h1{
-  		font-size: 18px;
-	}
-	.add-btn{
-		font-size: 12px;
-	}
-
-}
-
-@media (max-width: 567px){
-
-	.nav-header{
-		display: block !important;
-		text-align: center;
-	}
-
-	.navbar-brand{
-		padding-bottom: 2rem;
-	}
-
-	.book{
-		margin: 10px;
-	}
-	
-}
-
 
 /*popup menu*/
 .user_card {
@@ -79,6 +40,11 @@ button:active{
 	-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	border-radius: 10px;
+	/*overwrite other elements and displayes in front of them*/
+	z-index: 1;
+	/*bring div to the center horizontally and vertically in the page*/
+	position: absolute;
+    top: 25%;
 
 }
 
@@ -136,6 +102,7 @@ button:active{
 	border: 0 !important;
 	border-radius: 0.25rem 0 0 0.25rem !important;
 }
+
 .input_user,
 .input_pass:focus {
 	box-shadow: none !important;
@@ -155,6 +122,10 @@ button:active{
 
 .book{
 	padding: 10px;
+}
+
+#b-title{
+	font-weight: 900;
 }
 
 .book-info{
@@ -197,4 +168,47 @@ button:active{
 	/* Add the blur effect */
 	filter: blur(8px);
 	-webkit-filter: blur(8px);
+}
+
+@media (max-width: 996px){
+
+	.navbar-brand h1{
+  		font-size: 1.5rem;
+	}
+	.add-btn{
+		font-size: 1rem;
+	}
+
+}
+
+@media (max-width: 776px){
+
+	.navbar-brand h1{
+  		font-size: 18px;
+	}
+	.add-btn{
+		font-size: 12px;
+	}
+
+}
+
+@media (max-width: 567px){
+
+	.nav-header{
+		display: block !important;
+		text-align: center;
+	}
+
+	.navbar-brand{
+		padding-bottom: 2rem;
+	}
+
+	.book{
+		margin: 10px;
+	}
+
+	.user_card{
+		width: 250px;
+	}
+	
 }
