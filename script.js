@@ -43,7 +43,7 @@ const form = document.querySelector('.user_card');
 // create object
 class Book {
   // the constructor...
-  constructor(title,author,pages,read){
+  constructor(id,title,author,pages,read){
   	// user input instanciate a new object
   	this.id = myLibrary.length
   	this.title = title;
@@ -54,22 +54,22 @@ class Book {
 
 }
 
-function addExisitingBookToLibrary(){
-	// when looping through objects, use in 
+// function addExisitingBookToLibrary(){
+// 	// when looping through objects, use in 
 	
-	for (let i = 0; i < b_title.length; i++){
-		// console.log(read_toggle)
+// 	for (let i = 0; i < b_title.length; i++){
+// 		// console.log(read_toggle)
 
-		// alrady exsiting data
-		b_title_input = b_title[i].textContent
-		author_title_input = author_title[i].textContent
-		p_num_input = p_num[i].textContent
-		already_read = (read_toggle[i].textContent === 'Finished') ? true : false;
+// 		// alrady exsiting data
+// 		b_title_input = b_title[i].textContent
+// 		author_title_input = author_title[i].textContent
+// 		p_num_input = p_num[i].textContent
+// 		already_read = (read_toggle[i].textContent === 'Finished') ? true : false;
 
-		addBookToLibrary(b_title_input,author_title_input,p_num_input, already_read)
+// 		addBookToLibrary(b_title_input,author_title_input,p_num_input, already_read)
 
-	}
-};
+// 	}
+// };
 
 
 // local storage flow
@@ -79,11 +79,24 @@ function addExisitingBookToLibrary(){
 // 			3: Book {title: "cxv", author: "fgh", pages: "23", read: true}
 // ]
 
-function addBookToLibrary(b_name,a_name,numOfPages,readOrNot) {
+function addBookToLibrary(newId,b_name,a_name,numOfPages,readOrNot) {
   // do stuff here
-  myLibrary.push(new Book(b_name,a_name,numOfPages,readOrNot))
+  myLibrary.push(new Book(newId,b_name,a_name,numOfPages,readOrNot))
 
 };	
+
+// function displayLocalStorage(){
+// 	for (let i = 0; i < localStorage.length; i++){
+// 		existing_id = localStorage[i].id 
+// 		existing_title = localStorage[i].title 
+// 		existing_author = localStorage[i].author 
+// 		existing_pages = localStorage[i].pages 
+// 		existing_read = localStorage[i].read 
+
+// 		renderNewDiv(existing_id,existing_title,existing_author,existing_pages,existing_read)
+
+// 	}
+// }
 
 //remove book
 // console.log(remove_btn.length)
@@ -105,8 +118,29 @@ function addBookToLibrary(b_name,a_name,numOfPages,readOrNot) {
 // setRemoveBtn()
 
 // user action
+// console.log(window.localStorage)
 
+function getBookFromLocalStorage(){
+	for (let i = 0; i < localStorage.length; i++){
 
+		let retrievedObject = localStorage.getItem(cnt.toString());
+		let desirialize_obj = JSON.parse(retrievedObject);
+
+		console.log('retrievedObject: ', JSON.parse(retrievedObject));
+		console.log(desirialize_obj['title'])
+
+		newId = desirialize_obj['id']
+		new_b = desirialize_obj['title'] 
+		new_a = desirialize_obj['author']
+		new_p = desirialize_obj['pages'] 
+		new_r = desirialize_obj['read']
+		// console.log(localStorage[i])
+		console.log(newId,new_b,new_a,new_p,new_r)
+		renderNewDiv(newId,new_b,new_a,new_p,new_r)
+		// localStorage(i,(newId,new_b,new_a,new_p,new_r))
+		addBookToLibrary(newId,new_b,new_a,new_p,new_r)
+	}
+}
 
 
 // activate pop-up menu
@@ -169,7 +203,7 @@ function renderNewDiv(id,b,a,p,r){
 	// get user's input for books'name
 	user_input_bookname = document.createElement('p');
 	user_input_bookname.setAttribute('class', 'user-input pb-2 pt-2');
-	user_input_bookname.innerHTML = temp_book //https://stackoverflow.com/questions/27079598/error-failed-to-execute-appendchild-on-node-parameter-1-is-not-of-type-no
+	user_input_bookname.innerHTML = b //https://stackoverflow.com/questions/27079598/error-failed-to-execute-appendchild-on-node-parameter-1-is-not-of-type-no
 	book_card.appendChild(user_input_bookname);
 
 
@@ -187,7 +221,7 @@ function renderNewDiv(id,b,a,p,r){
 	// get user's input for books'name
 	user_input_authorname = document.createElement('p');
 	user_input_authorname.setAttribute('class', 'user-input pb-2 pt-2');
-	user_input_authorname.innerHTML = temp_authour
+	user_input_authorname.innerHTML = a
 	book_card.appendChild(user_input_authorname);
 
 
@@ -205,7 +239,7 @@ function renderNewDiv(id,b,a,p,r){
 	// get user's input for pages
 	user_input_page = document.createElement('p');
 	user_input_page.setAttribute('class', 'pages-text');
-	user_input_page.innerHTML = temp_pages;
+	user_input_page.innerHTML = p;
 	book_card.appendChild(user_input_page);
 
 
@@ -254,14 +288,14 @@ function renderNewDiv(id,b,a,p,r){
 	// create icon
 	remove_icon = document.createElement('i');
 	remove_icon.setAttribute('class', 'fa fa-trash align-top');
-	remove_icon.setAttribute('id', id.toString());
+	remove_icon.setAttribute('id', id);
 
 	remove_button.appendChild(remove_icon);
 	book_card.appendChild(remove_button);
 }
 
 // deactivate pop-up menu, get inputs 
-
+let cnt = 0;
 submit.addEventListener('click',(e) => {
 
 	// check if input is entered or not
@@ -269,19 +303,37 @@ submit.addEventListener('click',(e) => {
 	// all that needs to be checked is all fields entered or not
 	if (bookname.value !== '' && authorname.value !== '' && pages.value !== '' && (read.checked || not_read.checked)) {
 
-		
+		e.preventDefault();
 		
 		// console.log('hiya')
 		// test a case where type name and delete it and submit 
 		// if it goes through, wrong
+		temp_id = cnt
 		temp_book = bookname.value
 		temp_authour = authorname.value
 		temp_pages = pages.value
 		readOrNot = read.checked ? true : false;
 
-		addBookToLibrary(bookname.value,authorname.value,pages.value, readOrNot)
+		addBookToLibrary(temp_id,bookname.value,authorname.value,pages.value, readOrNot)
+
+		// how to store itme in storage,
+		// giving id wont work cuz when there are 4 items, and delte 2nd item which id is 1 and last item's id is 3 and new one will be 3 too
+		
 		// new_book = myLibrary[myLibrary.length-1]
-		new_book_id = myLibrary.length-1
+		new_book_id = cnt
+		// to store a entire javascript object we need to serialize it first (with JSON.stringify)
+		console.log(myLibrary[myLibrary.length-1])
+		json = JSON.stringify(myLibrary[myLibrary.length-1])
+		localStorage.setItem(cnt.toString(), json);
+		console.log(JSON.stringify(myLibrary[myLibrary.length-1]))
+		console.log(localStorage)
+		
+		// Retrieve the object from storage
+		let retrievedObject = localStorage.getItem(cnt.toString());
+
+		console.log('retrievedObject: ', JSON.parse(retrievedObject));
+		cnt++
+		// Storage.clear()
 		// console.log(typeof new_book_id)
 
 		renderNewDiv(new_book_id,bookname.value,authorname.value,pages.value, readOrNot) 
@@ -291,7 +343,7 @@ submit.addEventListener('click',(e) => {
 	    authorname.value = ''
 	    pages.value = ''
 
-	    e.preventDefault();
+	    // e.preventDefault();
 	   
 		b_form.classList.add("d-none"); // remove d-none so book form pops up
 		bg_blur.classList.remove('blur')
@@ -315,14 +367,14 @@ function main(){
 			// delte object from my library
 			del_idx = parseInt(e.target.id)
 			console.log(typeof del_idx)
-			arr = myLibrary.filter(item => item['id'] !== del_idx)
-			console.log(arr)
-			myLibrary = arr;
-			console.log(typeof myLibrary)
+			myLibrary = myLibrary.filter(item => item['id'] !== del_idx)
+			// console.log(myLibrary)			
+			// console.log(typeof myLibrary)
 
 			// for (let i = 0; i < myLibrary.length; i++){
 			// 	console.log(myLibrary[i]['id'])
 			// }
+
 			
 		}
 
@@ -343,6 +395,7 @@ function main(){
 	});
 }
 
-
-addExisitingBookToLibrary()
+// localStorage.clear()
+getBookFromLocalStorage()
+// addExisitingBookToLibrary()
 main()
