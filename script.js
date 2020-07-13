@@ -5,12 +5,7 @@
 
 
 // todo
-// 
-// 1, when input is missing, have a warning message popup by the text box
-// 2, when input is not number, have a warning message popup by the text box
-// 3, make background blur when popup menu is activated
-// 4, takes user input
-// 5, create another book based on user input
+// when 3 books exist and add a book, one of them is deleted
 
 
 // play ground, to be deleted
@@ -120,26 +115,36 @@ function addBookToLibrary(newId,b_name,a_name,numOfPages,readOrNot) {
 // user action
 // console.log(window.localStorage)
 
+// every time a page is loaded, books should be retrieved from local storage and render them
 function getBookFromLocalStorage(){
-	for (let i = 0; i < localStorage.length; i++){
+	// if (localStorage.length) does not work
+	if (localStorage.length > 0){
+		// for (const property in localStorage){ this one loops over all the properties in localStorage
+		Object.keys(localStorage).forEach(function(key){
+   			// console.log(localStorage.getItem(key));
+   			// console.log(localStorage.length)
+			let retrievedObject = localStorage.getItem(key);
+			// console.log(retrievedObject);
+			let desirialize_obj = JSON.parse(retrievedObject);
+			// console.log(desirialize_obj)
+			// console.log('retrievedObject: ', JSON.parse(retrievedObject));
+			//	 console.log(desirialize_obj['title'])
 
-		let retrievedObject = localStorage.getItem(cnt.toString());
-		let desirialize_obj = JSON.parse(retrievedObject);
-
-		console.log('retrievedObject: ', JSON.parse(retrievedObject));
-		console.log(desirialize_obj['title'])
-
-		newId = desirialize_obj['id']
-		new_b = desirialize_obj['title'] 
-		new_a = desirialize_obj['author']
-		new_p = desirialize_obj['pages'] 
-		new_r = desirialize_obj['read']
-		// console.log(localStorage[i])
-		console.log(newId,new_b,new_a,new_p,new_r)
-		renderNewDiv(newId,new_b,new_a,new_p,new_r)
-		// localStorage(i,(newId,new_b,new_a,new_p,new_r))
-		addBookToLibrary(newId,new_b,new_a,new_p,new_r)
+			newId = desirialize_obj['id']
+			new_b = desirialize_obj['title'] 
+			new_a = desirialize_obj['author']
+			new_p = desirialize_obj['pages'] 
+			new_r = desirialize_obj['read']
+			// console.log(localStorage[i])
+			// console.log(newId,new_b,new_a,new_p,new_r)
+			renderNewDiv(newId,new_b,new_a,new_p,new_r)
+			// localStorage(i,(newId,new_b,new_a,new_p,new_r))
+			addBookToLibrary(newId,new_b,new_a,new_p,new_r)
+		
+		});
+		
 	}
+	
 }
 
 
@@ -168,6 +173,18 @@ close_btn.addEventListener('click',(e) => {
     // body.classList.add('blur')
     // console.log(e);
 });
+
+function getNewID(){
+
+	// ID will always be the largest number of id plus 1.
+	if (localStorage.length) {
+		console.log(Object.keys(localStorage).map(x => parseInt(x)) + 1)
+    	return Math.max(...Object.keys(localStorage).map(x => parseInt(x))) + 1;
+    	
+ 	} else {
+    	return 0;
+	}
+}
 
 
 function renderNewDiv(id,b,a,p,r){
@@ -295,7 +312,6 @@ function renderNewDiv(id,b,a,p,r){
 }
 
 // deactivate pop-up menu, get inputs 
-let cnt = 0;
 submit.addEventListener('click',(e) => {
 
 	// check if input is entered or not
@@ -308,7 +324,7 @@ submit.addEventListener('click',(e) => {
 		// console.log('hiya')
 		// test a case where type name and delete it and submit 
 		// if it goes through, wrong
-		temp_id = cnt
+		temp_id = getNewID()
 		temp_book = bookname.value
 		temp_authour = authorname.value
 		temp_pages = pages.value
@@ -320,23 +336,12 @@ submit.addEventListener('click',(e) => {
 		// giving id wont work cuz when there are 4 items, and delte 2nd item which id is 1 and last item's id is 3 and new one will be 3 too
 		
 		// new_book = myLibrary[myLibrary.length-1]
-		new_book_id = cnt
 		// to store a entire javascript object we need to serialize it first (with JSON.stringify)
-		console.log(myLibrary[myLibrary.length-1])
+		// console.log(myLibrary[myLibrary.length-1])
 		json = JSON.stringify(myLibrary[myLibrary.length-1])
-		localStorage.setItem(cnt.toString(), json);
-		console.log(JSON.stringify(myLibrary[myLibrary.length-1]))
-		console.log(localStorage)
-		
-		// Retrieve the object from storage
-		let retrievedObject = localStorage.getItem(cnt.toString());
+		localStorage.setItem(temp_id.toString(), json);
 
-		console.log('retrievedObject: ', JSON.parse(retrievedObject));
-		cnt++
-		// Storage.clear()
-		// console.log(typeof new_book_id)
-
-		renderNewDiv(new_book_id,bookname.value,authorname.value,pages.value, readOrNot) 
+		renderNewDiv(temp_id,temp_book,temp_authour,temp_pages, readOrNot) 
 
 		// clear fields
 	    bookname.value = ''
@@ -361,21 +366,20 @@ function main(){
 
 		// delete book
 		if (e.target.className === 'fa fa-trash align-top'){
-			console.log(e.target.id)
+			// console.log(e.target.id)
 			// e.target gets html element
 			e.target.parentNode.parentNode.parentNode.parentNode.remove()
 			// delte object from my library
 			del_idx = parseInt(e.target.id)
-			console.log(typeof del_idx)
+			// 	console.log(typeof del_idx)
 			myLibrary = myLibrary.filter(item => item['id'] !== del_idx)
 			// console.log(myLibrary)			
 			// console.log(typeof myLibrary)
 
-			// for (let i = 0; i < myLibrary.length; i++){
-			// 	console.log(myLibrary[i]['id'])
-			// }
+			// test create 4 books -> delete last newest book (id=3) ->
+			// creat new book check its id
+			localStorage.removeItem(e.target.id)
 
-			
 		}
 
 		// toggle read button
