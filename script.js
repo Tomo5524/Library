@@ -74,6 +74,7 @@ class Book {
 // 			3: Book {title: "cxv", author: "fgh", pages: "23", read: true}
 // ]
 
+// add new book to the array
 function addBookToLibrary(newId,b_name,a_name,numOfPages,readOrNot) {
   // do stuff here
   myLibrary.push(new Book(newId,b_name,a_name,numOfPages,readOrNot))
@@ -123,6 +124,8 @@ function getBookFromLocalStorage(){
 		Object.keys(localStorage).forEach(function(key){
    			// console.log(localStorage.getItem(key));
    			// console.log(localStorage.length)
+
+   			// deserialize localstorage
 			let retrievedObject = localStorage.getItem(key);
 			// console.log(retrievedObject);
 			let desirialize_obj = JSON.parse(retrievedObject);
@@ -174,11 +177,14 @@ close_btn.addEventListener('click',(e) => {
     // console.log(e);
 });
 
+// create new id to a new book
 function getNewID(){
 
 	// ID will always be the largest number of id plus 1.
 	if (localStorage.length) {
-		console.log(Object.keys(localStorage).map(x => parseInt(x)) + 1)
+
+		// what is the difference
+		// console.log(Object.keys(localStorage).map(x => parseInt(x)) + 1)
     	return Math.max(...Object.keys(localStorage).map(x => parseInt(x))) + 1;
     	
  	} else {
@@ -187,6 +193,7 @@ function getNewID(){
 }
 
 
+// render a book
 function renderNewDiv(id,b,a,p,r){
 
 	// create row
@@ -271,18 +278,19 @@ function renderNewDiv(id,b,a,p,r){
 
 	// assign button according to user's input
 	if (r) {
-  		read_button.setAttribute('class', 'btn btn-primary');
+  		read_button.setAttribute('class', 'btn btn-primary ' + id);
   		read_button.innerHTML = 'Finished'
 
 	} else {
-		read_button.setAttribute('class', 'btn btn-warning');
+		read_button.setAttribute('class', 'btn btn-warning ' + id);
 		read_button.innerHTML = 'Not Finished'
 	}
 
 
 	book_card.appendChild(read_button);
 
-	// initiate and append it to parent remove button
+
+	// craete card-footer, initiate and append it to parent remove button
 	book_card = document.createElement('div');
 	book_card.setAttribute('class', 'card-footer d-flex');
 	new_book_info.appendChild(book_card);
@@ -330,6 +338,7 @@ submit.addEventListener('click',(e) => {
 		temp_pages = pages.value
 		readOrNot = read.checked ? true : false;
 
+		// push new book to the library array
 		addBookToLibrary(temp_id,bookname.value,authorname.value,pages.value, readOrNot)
 
 		// how to store itme in storage,
@@ -338,7 +347,10 @@ submit.addEventListener('click',(e) => {
 		// new_book = myLibrary[myLibrary.length-1]
 		// to store a entire javascript object we need to serialize it first (with JSON.stringify)
 		// console.log(myLibrary[myLibrary.length-1])
+
+		// converts a JavaScript object or value to a JSON string
 		json = JSON.stringify(myLibrary[myLibrary.length-1])
+		// push object to localStorage, key is book id, value is book object
 		localStorage.setItem(temp_id.toString(), json);
 
 		renderNewDiv(temp_id,temp_book,temp_authour,temp_pages, readOrNot) 
@@ -367,11 +379,12 @@ function main(){
 		// delete book
 		if (e.target.className === 'fa fa-trash align-top'){
 			// console.log(e.target.id)
-			// e.target gets html element
+			// e.target gets html element traverse back to parent 
 			e.target.parentNode.parentNode.parentNode.parentNode.remove()
 			// delte object from my library
 			del_idx = parseInt(e.target.id)
 			// 	console.log(typeof del_idx)
+			// filter object whose key is delete id
 			myLibrary = myLibrary.filter(item => item['id'] !== del_idx)
 			// console.log(myLibrary)			
 			// console.log(typeof myLibrary)
@@ -384,16 +397,37 @@ function main(){
 
 		// toggle read button
 		if (e.target.id === 'toggle'){
-			
+			// get id of current book
+			key_id = e.target.classList[2]
+			// console.log(key_id)
+			// let retrievedObject = localStorage.getItem(key_id);
+			// console.log(retrievedObject);
+			// console.log(retrievedObject['read']);
+			let desirialize_obj = JSON.parse(localStorage[key_id]);
+			// after desirialize object, it becomes accsible by keys
+			console.log(desirialize_obj['read']);
+			console.log(desirialize_obj)
+
+			cur_book = desirialize_obj
+		
+			// console.log(localStorage[new_id])	
 			if (e.target.innerHTML === 'Finished'){
 				// change clas name to change button theme
-				e.target.className = 'btn btn-warning'
+				e.target.className = 'btn btn-warning ' + key_id
 				e.target.innerHTML = 'Not Finished'
-			}else{
-				e.target.className = 'btn btn-primary'
-  				e.target.innerHTML = 'Finished'
-			}
+				cur_book.read = false;
 				
+			}else{
+				e.target.className = 'btn btn-primary ' + key_id
+  				e.target.innerHTML = 'Finished';
+  				cur_book.read = true;
+			}
+
+			// when adding object to localstorage, make it object and key string
+			cur_id = cur_book.id.toString()
+			localStorage.setItem(cur_id, JSON.stringify(cur_book));
+
+
 		}
 
 	});
