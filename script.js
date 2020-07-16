@@ -40,7 +40,7 @@ class Book {
   // the constructor...
   constructor(id,title,author,pages,read){
   	// user input instanciate a new object
-  	this.id = myLibrary.length
+  	this.id = id;
   	this.title = title;
   	this.author = author;
   	this.pages = pages;
@@ -133,7 +133,10 @@ function getBookFromLocalStorage(){
 			// console.log('retrievedObject: ', JSON.parse(retrievedObject));
 			//	 console.log(desirialize_obj['title'])
 
-			newId = desirialize_obj['id']
+
+			newId = key;	
+			// newId = desirialize_obj['id']
+			console.log('get exsiting id',newId)			
 			new_b = desirialize_obj['title'] 
 			new_a = desirialize_obj['author']
 			new_p = desirialize_obj['pages'] 
@@ -185,6 +188,8 @@ function getNewID(){
 
 		// what is the difference
 		// console.log(Object.keys(localStorage).map(x => parseInt(x)) + 1)
+		console.log('meow')
+		console.log('GetnewID', Math.max(...Object.keys(localStorage).map(x => parseInt(x))) + 1)
     	return Math.max(...Object.keys(localStorage).map(x => parseInt(x))) + 1;
     	
  	} else {
@@ -313,6 +318,7 @@ function renderNewDiv(id,b,a,p,r){
 	// create icon
 	remove_icon = document.createElement('i');
 	remove_icon.setAttribute('class', 'fa fa-trash align-top');
+	console.log(id)
 	remove_icon.setAttribute('id', id);
 
 	remove_button.appendChild(remove_icon);
@@ -333,6 +339,7 @@ submit.addEventListener('click',(e) => {
 		// test a case where type name and delete it and submit 
 		// if it goes through, wrong
 		temp_id = getNewID()
+		console.log('temp_id this id created when submitting',temp_id)
 		temp_book = bookname.value
 		temp_authour = authorname.value
 		temp_pages = pages.value
@@ -350,6 +357,7 @@ submit.addEventListener('click',(e) => {
 
 		// converts a JavaScript object or value to a JSON string
 		json = JSON.stringify(myLibrary[myLibrary.length-1])
+		console.log('json string before going into localstorage',json)
 		// push object to localStorage, key is book id, value is book object
 		localStorage.setItem(temp_id.toString(), json);
 
@@ -378,11 +386,12 @@ function main(){
 
 		// delete book
 		if (e.target.className === 'fa fa-trash align-top'){
-			// console.log(e.target.id)
-			// e.target gets html element traverse back to parent 
-			e.target.parentNode.parentNode.parentNode.parentNode.remove()
 			// delte object from my library
 			del_idx = parseInt(e.target.id)
+			
+			// e.target gets html element traverse back to parent 
+			e.target.parentNode.parentNode.parentNode.parentNode.remove()
+			
 			// 	console.log(typeof del_idx)
 			// filter object whose key is delete id
 			myLibrary = myLibrary.filter(item => item['id'] !== del_idx)
@@ -427,7 +436,6 @@ function main(){
 			cur_id = cur_book.id.toString()
 			localStorage.setItem(cur_id, JSON.stringify(cur_book));
 
-
 		}
 
 	});
@@ -437,3 +445,5 @@ function main(){
 getBookFromLocalStorage()
 // addExisitingBookToLibrary()
 main()
+
+fix and declutter starts here
