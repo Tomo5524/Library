@@ -121,6 +121,7 @@ function getBookFromLocalStorage(){
 	// if (localStorage.length) does not work
 	if (localStorage.length > 0){
 		// for (const property in localStorage){ this one loops over all the properties in localStorage
+		// loop through keys
 		Object.keys(localStorage).forEach(function(key){
    			// console.log(localStorage.getItem(key));
    			// console.log(localStorage.length)
@@ -134,8 +135,8 @@ function getBookFromLocalStorage(){
 			//	 console.log(desirialize_obj['title'])
 
 
-			newId = key;	
-			// newId = desirialize_obj['id']
+			// newId = key;	
+			newId = desirialize_obj['id']
 			console.log('get exsiting id',newId)			
 			new_b = desirialize_obj['title'] 
 			new_a = desirialize_obj['author']
@@ -373,7 +374,6 @@ submit.addEventListener('click',(e) => {
 		b_form.classList.add("d-none"); // remove d-none so book form pops up
 		bg_blur.classList.remove('blur')
 
-
 	}
 });
 
@@ -433,7 +433,7 @@ function main(){
 			}
 
 			// when adding object to localstorage, make it object and key string
-			cur_id = cur_book.id.toString()
+			cur_id = cur_book.id.toString();
 			localStorage.setItem(cur_id, JSON.stringify(cur_book));
 
 		}
@@ -445,5 +445,3 @@ function main(){
 getBookFromLocalStorage()
 // addExisitingBookToLibrary()
 main()
-
-fix and declutter starts here
